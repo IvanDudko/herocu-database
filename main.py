@@ -1,5 +1,6 @@
 import os
 import telebot
+from telebot import types
 import logging
 from config import *
 from flask import Flask, request
@@ -23,6 +24,11 @@ def redirect_message():
     bot.process_new_updates([update])
     return "!", 200
 
+@bot.message_handler(content_types=['text'])
+def mess(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    btn1 = types.KeyboardButton("Помощь")
+    markup.add(btn1)
 
 if __name__ == "__main__":
     bot.remove_webhook()
